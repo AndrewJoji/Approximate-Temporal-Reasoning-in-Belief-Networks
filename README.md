@@ -10,13 +10,13 @@ Given a belief network, we observe two events: the activation of a sprinkler sys
 
 The analysis is carried out in multiple stages:
 
-Rejection Sampling Visualization: The first task is to visualize the convergence of the rejection sampling method. A dataset containing 100,000 generated samples indicates whether each sample is accepted or rejected, and if accepted, whether the event r is true or false. The visualization plots the cumulative probability estimate of P(r|s,w) as a function of the number of accepted samples, using a logarithmic scale for the x-axis to emphasize behavior at smaller sample sizes.
+**Rejection Sampling Visualization**: The first task is to visualize the convergence of the rejection sampling method. A dataset containing 100,000 generated samples indicates whether each sample is accepted or rejected, and if accepted, whether the event r is true or false. The visualization plots the cumulative probability estimate of P(r|s,w) as a function of the number of accepted samples, using a logarithmic scale for the x-axis to emphasize behavior at smaller sample sizes.
 
-Confidence Interval Estimation: Using Hoeffding's inequality, a tight bound is derived to estimate the confidence interval around the sample-based probability approximation. The value of this bound, ε, guarantees that the probability of the sample estimate deviating from the true probability by more than ε is less than 5%.
+**Confidence Interval Estimation**: Using Hoeffding's inequality, a tight bound is derived to estimate the confidence interval around the sample-based probability approximation. The value of this bound, ε, guarantees that the probability of the sample estimate deviating from the true probability by more than ε is less than 5%.
 
-Augmented Visualization: The original plot is augmented with confidence bounds, providing a visual representation of the uncertainty associated with the probability estimate. These bounds are computed dynamically from the cumulative accepted samples.
+**Augmented Visualization**: The original plot is augmented with confidence bounds, providing a visual representation of the uncertainty associated with the probability estimate. These bounds are computed dynamically from the cumulative accepted samples.
 
-Likelihood Weighting Analysis: A separate dataset for likelihood weighting contains 100,000 weighted samples. An equivalent analysis is performed, and the results are visualized in a similar manner, incorporating the sample weights into the probability estimate.
+**Likelihood Weighting Analysis**: A separate dataset for likelihood weighting contains 100,000 weighted samples. An equivalent analysis is performed, and the results are visualized in a similar manner, incorporating the sample weights into the probability estimate.
 
 **Code Implementation**
 

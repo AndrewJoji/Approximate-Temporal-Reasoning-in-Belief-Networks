@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Load the CSV file
-csv_path = './rs_1.csv'  
+csv_path = './data/rs_1.csv'  
 data = pd.read_csv(csv_path, header=None, names=['Sample_Result'])
 
 # Filter out rejected samples and calculate cumulative counts for accepted samples
@@ -17,7 +17,18 @@ delta_dynamic = 1.3581 * (1 / accepted_samples['Cumulative_Total']**0.5)
 accepted_samples['Dynamic_Upper_Confidence_Bound'] = accepted_samples['P_r_given_s_w'] + delta_dynamic
 accepted_samples['Dynamic_Lower_Confidence_Bound'] = np.maximum(0, accepted_samples['P_r_given_s_w'] - delta_dynamic)
 
-# Plotting with dynamic confidence bounds
+# Plot without confidence bounds
+plt.figure(figsize=(12, 8))
+plt.plot(accepted_samples['Cumulative_Total'], accepted_samples['P_r_given_s_w'], label='P(r|s,w)', color='blue')
+plt.xscale('log')  # Using logarithmic scale for x-axis
+plt.xlabel('Number of Accepted Samples (N) [Log Scale]')
+plt.ylabel('P(r|s,w)')
+plt.title('Probability of Rain Given Sprinkler is On and Grass is Wet')
+plt.grid(True, which="both", ls="--")
+plt.legend()
+plt.show()
+
+# Plot with dynamic confidence bounds
 plt.figure(figsize=(12, 8))
 plt.plot(accepted_samples['Cumulative_Total'], accepted_samples['P_r_given_s_w'], label='P(r|s,w)', color='blue')
 plt.fill_between(accepted_samples['Cumulative_Total'], accepted_samples['Dynamic_Lower_Confidence_Bound'], accepted_samples['Dynamic_Upper_Confidence_Bound'], color='lightblue', alpha=0.5, label='Confidence Bounds')

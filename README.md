@@ -1,5 +1,4 @@
-**Analysis of Probabilistic Inference in Belief Networks
-**
+**Analysis of Probabilistic Inference in Belief Networks**
 
 This project involves the analysis of probabilistic inference within belief networks, focusing on the assessment of two primary sampling techniques: rejection sampling and likelihood weighting. The goal is to interpret and understand the behavior of these anytime algorithms, especially how their results improve with an increasing number of samples.
 
@@ -7,8 +6,7 @@ This project involves the analysis of probabilistic inference within belief netw
 
 Given a belief network, we observe two events: the activation of a sprinkler system and the wetness of grass. These observations lead us to estimate the probability of a third event, rain, which is denoted by r. This probability, P(r|s,w), is assessed by analyzing the outcomes of sampling methods.
 
-**Sampling Methods Analysis
-**
+**Sampling Methods Analysis**
 The analysis is carried out in multiple stages:
 
 Rejection Sampling Visualization: The first task is to visualize the convergence of the rejection sampling method. A dataset containing 100,000 generated samples indicates whether each sample is accepted or rejected, and if accepted, whether the event r is true or false. The visualization plots the cumulative probability estimate of P(r|s,w) as a function of the number of accepted samples, using a logarithmic scale for the x-axis to emphasize behavior at smaller sample sizes.

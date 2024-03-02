@@ -12,21 +12,33 @@ accepted_samples['Cumulative_R_T'] = (accepted_samples['Sample_Result'] == 1).cu
 accepted_samples['Cumulative_Total'] = np.arange(1, len(accepted_samples) + 1)
 accepted_samples['P_r_given_s_w'] = accepted_samples['Cumulative_R_T'] / accepted_samples['Cumulative_Total']
 
-# Calculate dynamic delta for confidence bounds
-delta_dynamic = 1.3581 * (1 / accepted_samples['Cumulative_Total']**0.5)
-accepted_samples['Dynamic_Upper_Confidence_Bound'] = accepted_samples['P_r_given_s_w'] + delta_dynamic
-accepted_samples['Dynamic_Lower_Confidence_Bound'] = np.maximum(0, accepted_samples['P_r_given_s_w'] - delta_dynamic)
+total_accepted_samples_up_to_100000 = accepted_samples['P_r_given_s_w'].iloc[-1]
 
-# Plot without confidence bounds
+# Find the number of accepted samples up to the 100,000th generated sample
+num_accepted_samples_up_to_100000 = accepted_samples[accepted_samples.index < 100000]['P_r_given_s_w'].count()
+approximation_value = accepted_samples.iloc[num_accepted_samples_up_to_100000 - 1]['P_r_given_s_w'] if num_accepted_samples_up_to_100000 else None
+
+# Plot without confidence bounds including corrected annotation
 plt.figure(figsize=(12, 8))
 plt.plot(accepted_samples['Cumulative_Total'], accepted_samples['P_r_given_s_w'], label='P(r|s,w)', color='blue')
 plt.xscale('log')  # Using logarithmic scale for x-axis
 plt.xlabel('Number of Accepted Samples (N) [Log Scale]')
 plt.ylabel('P(r|s,w)')
 plt.title('Probability of Rain Given Sprinkler is On and Grass is Wet')
+if approximation_value:
+    plt.annotate(f'Approximation: {approximation_value:.4f}', 
+                xy=(num_accepted_samples_up_to_100000, approximation_value), 
+                xytext=(num_accepted_samples_up_to_100000, approximation_value - 0.1),
+                arrowprops=dict(facecolor='black', arrowstyle='->'),
+                horizontalalignment='left', verticalalignment='bottom')
 plt.grid(True, which="both", ls="--")
 plt.legend()
 plt.show()
+
+# Calculate dynamic delta for confidence bounds
+delta_dynamic = 1.3581 * (1 / accepted_samples['Cumulative_Total']**0.5)
+accepted_samples['Dynamic_Upper_Confidence_Bound'] = accepted_samples['P_r_given_s_w'] + delta_dynamic
+accepted_samples['Dynamic_Lower_Confidence_Bound'] = np.maximum(0, accepted_samples['P_r_given_s_w'] - delta_dynamic)
 
 # Plot with dynamic confidence bounds
 plt.figure(figsize=(12, 8))
